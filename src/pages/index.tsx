@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import type { NextPage } from "next";
 import { Flex, Stack, Button, Input } from "@chakra-ui/react";
 
@@ -8,7 +8,9 @@ import { collection, addDoc } from "firebase/firestore";
 const Home: NextPage = () => {
   const [value, setValue] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setValue(event.target.value);
     console.log(event.target.value);
   };
@@ -41,7 +43,7 @@ const Home: NextPage = () => {
         type="submit"
         mt="6"
         colorScheme="pink"
-        onClick={(e) => handleClick(e)}
+        onClick={(e) => handleClick()}
       >
         Entrar
       </Button>
