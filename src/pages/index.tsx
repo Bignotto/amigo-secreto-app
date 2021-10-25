@@ -4,15 +4,7 @@ import crypto from "crypto";
 import type { NextPage } from "next";
 import { Flex, Stack, Button, Input, Text } from "@chakra-ui/react";
 
-import { db, database } from "../services/firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  onSnapshot,
-  doc,
-} from "firebase/firestore";
+import { database } from "../services/firebase";
 
 import { ref, set } from "firebase/database";
 
@@ -25,8 +17,6 @@ interface IUsers {
 const Home: NextPage = () => {
   const [value, setValue] = useState("");
   const [invite, setInvite] = useState("");
-
-  const q = query(collection(db, "users"));
 
   const handleChange = (event: {
     target: { value: SetStateAction<string> };
