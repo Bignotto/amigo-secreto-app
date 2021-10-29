@@ -2,11 +2,17 @@ import { SetStateAction, useState } from "react";
 import crypto from "crypto";
 
 import type { NextPage } from "next";
-import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
+import { Flex, Stack, Button, Input, Text } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
 
 import { ref, set } from "firebase/database";
+
+interface IUsers {
+  first: string;
+  last: string;
+  born: number;
+}
 
 const Home: NextPage = () => {
   const [value, setValue] = useState("");
@@ -50,9 +56,40 @@ const Home: NextPage = () => {
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center" flexDir="column">
-      <Text fontFamily="Pacifico" size="64">
-        Amigo Secreto
-      </Text>
+      <Stack spacing="4">
+        <Input
+          name="group"
+          type="text"
+          label="Novo grupo"
+          value={value}
+          onChange={handleChange}
+        />
+      </Stack>
+      <Button
+        type="submit"
+        mt="6"
+        colorScheme="pink"
+        onClick={(e) => handleClick()}
+      >
+        Entrar
+      </Button>
+      <Stack spacing="4">
+        <Input
+          name="invite"
+          type="text"
+          label="Tenho um convite"
+          value={invite}
+          onChange={handleChangeInvite}
+        />
+      </Stack>
+      <Button
+        type="submit"
+        mt="6"
+        colorScheme="pink"
+        onClick={(e) => handleClickInvite()}
+      >
+        Entrar
+      </Button>
     </Flex>
   );
 };
