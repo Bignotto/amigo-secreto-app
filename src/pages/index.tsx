@@ -49,10 +49,16 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center" flexDir="column">
-      <Text fontFamily="Pacifico" size="64">
-        Amigo Secreto
-      </Text>
+    <Flex align="center" justify="center">
+      <Flex w="50vw" h="100vh" align="center" justify="center" flexDir="column">
+        <Text fontFamily="Pacifico" fontSize="6xl">
+          Amigo
+          <br />
+          Secreto
+        </Text>
+        <Text fontFamily="Roboto">Crie seu grupo de Amigo Secreto:</Text>
+        <Input placeholder="Nome do grupo" />
+      </Flex>
     </Flex>
   );
 };
