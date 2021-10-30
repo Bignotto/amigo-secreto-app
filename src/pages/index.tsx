@@ -9,13 +9,14 @@ import { database } from "../services/firebase";
 import { ref, set } from "firebase/database";
 
 const Home: NextPage = () => {
-  const [value, setValue] = useState("");
+  const [groupName, setGroupName] = useState("");
   const [invite, setInvite] = useState("");
 
-  const handleChange = (event: {
+  const changeGroupName = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setValue(event.target.value);
+    setGroupName(event.target.value);
+    console.log({ groupName });
   };
 
   const handleChangeInvite = (event: {
@@ -24,11 +25,13 @@ const Home: NextPage = () => {
     setInvite(event.target.value);
   };
 
-  const handleClick = async () => {
-    const id = crypto.randomBytes(6).toString("hex");
+  const handleCreateNewGroup = async (event) => {
+    event.preventDefault();
+    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+
     try {
       await set(ref(database, `groups/${id}`), {
-        group_name: "teste grupo",
+        group_name: groupName,
         group_owner: "thiago bignotto",
       });
     } catch (e) {
@@ -50,14 +53,29 @@ const Home: NextPage = () => {
 
   return (
     <Flex align="center" justify="center">
-      <Flex w="50vw" h="100vh" align="center" justify="center" flexDir="column">
+      <Flex
+        w={["90vw", "50vw"]}
+        h="100vh"
+        align="center"
+        justify="center"
+        flexDir="column"
+      >
         <Text fontFamily="Pacifico" fontSize="6xl">
           Amigo
           <br />
           Secreto
         </Text>
-        <Text fontFamily="Roboto">Crie seu grupo de Amigo Secreto:</Text>
-        <Input placeholder="Nome do grupo" />
+        <Flex as="form" flexDir="column" onSubmit={handleCreateNewGroup}>
+          <Text mt="10" fontFamily="Roboto">
+            Crie seu grupo de Amigo Secreto:
+          </Text>
+          <Input
+            placeholder="Nome do grupo"
+            value={groupName}
+            onChange={changeGroupName}
+          />
+          <Button type="submit">Criar Grupo</Button>
+        </Flex>
       </Flex>
     </Flex>
   );
