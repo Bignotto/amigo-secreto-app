@@ -55,7 +55,12 @@ const Home: NextPage = () => {
           <br />
           Secreto
         </Text>
-        <Flex as="form" flexDir="column" onSubmit={handleCreateNewGroup}>
+        <Flex
+          width="100%"
+          as="form"
+          flexDir="column"
+          onSubmit={handleCreateNewGroup}
+        >
           <Text mt="10" fontFamily="Roboto">
             Crie seu grupo de Amigo Secreto:
           </Text>
@@ -64,18 +69,28 @@ const Home: NextPage = () => {
             value={groupName}
             onChange={(event) => setGroupName(event.target.value)}
           />
-          <Button type="submit">Criar Grupo</Button>
+          <Button type="submit" bg="blue.600" mt="2">
+            Criar Grupo
+          </Button>
         </Flex>
-        <Flex as="form" flexDir="column" onSubmit={handleCreateNewGroup}>
+        <Flex
+          width="100%"
+          as="form"
+          flexDir="column"
+          onSubmit={handleCreateNewGroup}
+        >
           <Text mt="20" fontFamily="Roboto">
             Tenho um convite!
           </Text>
           <Input
+            width="100%"
             placeholder="Código do convite"
             value={invite}
             onChange={(event) => setInvite(event.target.value)}
           />
-          <Button type="submit">Entrar no grupo</Button>
+          <Button width="100%" type="submit" bg="blue.600" mt="2">
+            Entrar no grupo
+          </Button>
         </Flex>
       </Flex>
     </Flex>
