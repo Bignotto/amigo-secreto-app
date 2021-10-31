@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       await set(ref(database, `groups/${id}`), {
         name: groupName,
       });
-      router.push(`/grupo/${id}`);
+      router.push(`/grupo/new/${id}`);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

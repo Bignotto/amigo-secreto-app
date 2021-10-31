@@ -3,7 +3,8 @@ import { Text, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRoom } from "../../hooks/useGroup";
 
-const Grupo: NextPage = () => {
+//PÁGINA DO GRUPO
+const Group: NextPage = () => {
   const router = useRouter();
   const { group_id } = router.query;
 
@@ -22,4 +23,4 @@ const Grupo: NextPage = () => {
   );
 };
 
-export default Grupo;
+export default Group;
