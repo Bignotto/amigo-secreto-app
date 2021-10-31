@@ -1,32 +1,20 @@
 import { useEffect, useState } from "react";
 import { database } from "../services/firebase";
 import { ref, onValue, off } from "firebase/database";
-
-type Friend = {
-  id: string;
-  name: string;
-  size?: number;
-  shoeSize?: number;
-  like?: string;
-  dontLike?: string;
-};
-
-type GroupAmigoSecreto = {
-  name: string;
-  owner?: string;
-  ownerId?: string;
-  friends?: Friend[];
-};
+import { GroupAmigoSecreto } from "./IGroup";
 
 export function useRoom(groupId: string) {
   const [name, setName] = useState("");
+  const [group, setGroup] = useState<GroupAmigoSecreto>(
+    {} as GroupAmigoSecreto
+  );
 
   useEffect(() => {
     const groupRef = ref(database, `groups/${groupId}`);
 
     onValue(groupRef, (group) => {
       const databaseGroup: GroupAmigoSecreto = group.val();
-      setName(databaseGroup.name);
+      setGroup(databaseGroup);
     });
 
     return () => {
@@ -34,5 +22,5 @@ export function useRoom(groupId: string) {
     };
   }, [groupId]);
 
-  return { name, groupId };
+  return { name, group };
 }
