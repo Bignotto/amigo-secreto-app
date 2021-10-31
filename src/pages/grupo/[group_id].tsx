@@ -10,13 +10,17 @@ const Group: NextPage = () => {
 
   if (!group_id) throw new Error("Missing information: group id");
 
-  const { name } = useRoom(group_id.toString());
+  const { group } = useRoom(group_id.toString());
 
   return (
     <Flex align="center" justify="center">
       <Flex w="50vw" h="50vh" align="center" justify="center" flexDir="column">
-        <Text fontFamily="Pacifico" size="64">
-          Novo grupo de amigo secreto {name}
+        <Text fontFamily="Pacifico" fontSize="2xl">
+          Amigo Secreto {group.name}
+        </Text>
+        <Text>
+          A revelação está marcada para {group.date}, em {group.where}. O valor
+          médio dos presentes é de {group.value}
         </Text>
       </Flex>
     </Flex>
