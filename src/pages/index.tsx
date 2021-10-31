@@ -1,52 +1,98 @@
-import { SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
 import type { NextPage } from "next";
-import { Flex, Stack, Button, Input } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import crypto from "crypto";
 
-import { db } from "../services/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
+
+import { database } from "../services/firebase";
+import { ref, set } from "firebase/database";
 
 const Home: NextPage = () => {
-  const [value, setValue] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [invite, setInvite] = useState("");
 
-  const handleChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setValue(event.target.value);
-    console.log(event.target.value);
-  };
+  const router = useRouter();
 
-  const handleClick = async () => {
+  const handleCreateNewGroup = async (event: FormEvent) => {
+    event.preventDefault();
+    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
+      await set(ref(database, `groups/${id}`), {
+        name: groupName,
       });
-      console.log("Document written with ID: ", docRef.id);
+      router.push(`/grupo/new/${id}`);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
+  const handleInvite = async (event: FormEvent) => {
+    event.preventDefault();
+    // const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+
+    // try {
+    //   await set(ref(database, `groups/${id}`), {
+    //     group_name: groupName,
+    //     group_owner: "thiago bignotto",
+    //   });
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
+  };
+
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
-      <Stack spacing="4">
-        <Input
-          name="email"
-          type="email"
-          label="E-Mail"
-          value={value}
-          onChange={handleChange}
-        />
-      </Stack>
-      <Button
-        type="submit"
-        mt="6"
-        colorScheme="pink"
-        onClick={(e) => handleClick()}
+    <Flex align="center" justify="center">
+      <Flex
+        w={["90vw", "50vw"]}
+        align="center"
+        justify="center"
+        flexDir="column"
       >
-        Entrar
-      </Button>
+        <Text fontFamily="Pacifico" fontSize="6xl">
+          Amigo
+          <br />
+          Secreto
+        </Text>
+        <Flex
+          width="100%"
+          as="form"
+          flexDir="column"
+          onSubmit={handleCreateNewGroup}
+        >
+          <Text mt="10" fontFamily="Roboto">
+            Crie seu grupo de Amigo Secreto:
+          </Text>
+          <Input
+            placeholder="Nome do grupo"
+            value={groupName}
+            onChange={(event) => setGroupName(event.target.value)}
+          />
+          <Button type="submit" bg="blue.600" mt="2">
+            Criar Grupo
+          </Button>
+        </Flex>
+        <Flex
+          width="100%"
+          as="form"
+          flexDir="column"
+          onSubmit={handleCreateNewGroup}
+        >
+          <Text mt="20" fontFamily="Roboto">
+            Tenho um convite!
+          </Text>
+          <Input
+            width="100%"
+            placeholder="Código do convite"
+            value={invite}
+            onChange={(event) => setInvite(event.target.value)}
+          />
+          <Button width="100%" type="submit" bg="blue.600" mt="2">
+            Entrar no grupo
+          </Button>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };
