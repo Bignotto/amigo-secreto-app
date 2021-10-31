@@ -1,31 +1,17 @@
-import { SetStateAction, useState } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import crypto from "crypto";
 
 import type { NextPage } from "next";
 import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
-
 import { ref, set } from "firebase/database";
 
 const Home: NextPage = () => {
   const [groupName, setGroupName] = useState("");
   const [invite, setInvite] = useState("");
 
-  const changeGroupName = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setGroupName(event.target.value);
-    console.log({ groupName });
-  };
-
-  const handleChangeInvite = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setInvite(event.target.value);
-  };
-
-  const handleCreateNewGroup = async (event) => {
+  const handleCreateNewGroup = async (event: FormEvent) => {
     event.preventDefault();
     const id = crypto.randomBytes(3).toString("hex").toUpperCase();
 
@@ -39,12 +25,14 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleClickInvite = async () => {
-    const id = crypto.randomBytes(6).toString("hex");
+  const handleInvite = async (event: FormEvent) => {
+    event.preventDefault();
+    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+
     try {
-      await set(ref(database, `invite/${id}`), {
-        from_group_name: "família",
-        invite_code: "xpto5267",
+      await set(ref(database, `groups/${id}`), {
+        group_name: groupName,
+        group_owner: "thiago bignotto",
       });
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -72,7 +60,18 @@ const Home: NextPage = () => {
           <Input
             placeholder="Nome do grupo"
             value={groupName}
-            onChange={changeGroupName}
+            onChange={(event) => setGroupName(event.target.value)}
+          />
+          <Button type="submit">Criar Grupo</Button>
+        </Flex>
+        <Flex as="form" flexDir="column" onSubmit={handleCreateNewGroup}>
+          <Text mt="20" fontFamily="Roboto">
+            Crie seu grupo de Amigo Secreto:
+          </Text>
+          <Input
+            placeholder="Nome do grupo"
+            value={invite}
+            onChange={(event) => setInvite(event.target.value)}
           />
           <Button type="submit">Criar Grupo</Button>
         </Flex>
