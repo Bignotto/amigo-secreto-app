@@ -14,7 +14,7 @@ const NewGroup: NextPage = () => {
 
   if (!group_id) throw new Error("Missing information: group id");
 
-  const { name } = useRoom(group_id.toString());
+  const { group } = useRoom(group_id.toString());
   const [owner, setOwner] = useState("");
   const [date, setDate] = useState("");
   const [where, setWhere] = useState("");
@@ -39,7 +39,9 @@ const NewGroup: NextPage = () => {
   return (
     <Flex align="center" justify="center">
       <Flex w={["95vw", "50vw"]} flexDir="column">
-        <Text fontFamily="Roboto">Ótimo! Vamos criaro o grupo {name}</Text>
+        <Text fontFamily="Roboto">
+          Ótimo! Vamos criaro o grupo {group.name}
+        </Text>
         <Flex
           width="100%"
           as="form"
