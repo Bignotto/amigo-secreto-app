@@ -1,17 +1,23 @@
 import { NextPage } from "next";
 import { Text, Flex } from "@chakra-ui/react";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
+import { useRoom } from "../../hooks/useGroup";
 
 const Grupo: NextPage = () => {
   const router = useRouter();
   const { group_id } = router.query;
 
-  console.log({ group_id });
+  if (!group_id) throw new Error("Missing information: group id");
+
+  const { name } = useRoom(group_id.toString());
+
   return (
-    <Flex w="50vw" h="50vh" align="center" justify="center" flexDir="column">
-      <Text fontFamily="Pacifico" size="64">
-        Ahá! {group_id}
-      </Text>
+    <Flex align="center" justify="center">
+      <Flex w="50vw" h="50vh" align="center" justify="center" flexDir="column">
+        <Text fontFamily="Pacifico" size="64">
+          Novo grupo de amigo secreto {name}
+        </Text>
+      </Flex>
     </Flex>
   );
 };

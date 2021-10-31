@@ -1,7 +1,8 @@
-import { FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, useState } from "react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import crypto from "crypto";
 
-import type { NextPage } from "next";
 import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
@@ -11,15 +12,17 @@ const Home: NextPage = () => {
   const [groupName, setGroupName] = useState("");
   const [invite, setInvite] = useState("");
 
+  const router = useRouter();
+
   const handleCreateNewGroup = async (event: FormEvent) => {
     event.preventDefault();
     const id = crypto.randomBytes(3).toString("hex").toUpperCase();
 
     try {
       await set(ref(database, `groups/${id}`), {
-        group_name: groupName,
-        group_owner: "thiago bignotto",
+        name: groupName,
       });
+      router.push(`/grupo/${id}`);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -27,23 +30,22 @@ const Home: NextPage = () => {
 
   const handleInvite = async (event: FormEvent) => {
     event.preventDefault();
-    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+    // const id = crypto.randomBytes(3).toString("hex").toUpperCase();
 
-    try {
-      await set(ref(database, `groups/${id}`), {
-        group_name: groupName,
-        group_owner: "thiago bignotto",
-      });
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+    // try {
+    //   await set(ref(database, `groups/${id}`), {
+    //     group_name: groupName,
+    //     group_owner: "thiago bignotto",
+    //   });
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
   };
 
   return (
     <Flex align="center" justify="center">
       <Flex
         w={["90vw", "50vw"]}
-        h="100vh"
         align="center"
         justify="center"
         flexDir="column"
@@ -66,14 +68,14 @@ const Home: NextPage = () => {
         </Flex>
         <Flex as="form" flexDir="column" onSubmit={handleCreateNewGroup}>
           <Text mt="20" fontFamily="Roboto">
-            Crie seu grupo de Amigo Secreto:
+            Tenho um convite!
           </Text>
           <Input
-            placeholder="Nome do grupo"
+            placeholder="Código do convite"
             value={invite}
             onChange={(event) => setInvite(event.target.value)}
           />
-          <Button type="submit">Criar Grupo</Button>
+          <Button type="submit">Entrar no grupo</Button>
         </Flex>
       </Flex>
     </Flex>
