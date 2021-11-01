@@ -1,16 +1,23 @@
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Text, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRoom } from "../../hooks/useGroup";
+import { GroupAmigoSecreto } from "../../hooks/IGroup";
 
 //PÁGINA DO GRUPO
 const Group: NextPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const { group_id } = router.query;
 
-  if (!group_id) throw new Error("Missing information: group id");
+  const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
 
-  const { group } = useRoom(group_id.toString());
+  const { group } = useRoom(id);
+
+  useEffect(() => {
+    setIsLoading(router.isReady);
+  }, [router.isReady]);
 
   return (
     <Flex align="center" justify="center">
@@ -18,10 +25,13 @@ const Group: NextPage = () => {
         <Text fontFamily="Pacifico" fontSize="2xl">
           Amigo Secreto {group.name}
         </Text>
-        <Text>
-          A revelação está marcada para {group.date}, em {group.where}. O valor
-          médio dos presentes é de {group.value}
-        </Text>
+        {!isLoading && <Text>Carregando</Text>}
+        {isLoading && (
+          <Text>
+            A revelação está marcada para {group.date}, em {group.where}. O
+            valor médio dos presentes é de {group.value}
+          </Text>
+        )}
       </Flex>
     </Flex>
   );

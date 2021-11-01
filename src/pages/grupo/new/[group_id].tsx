@@ -25,6 +25,7 @@ const NewGroup: NextPage = () => {
 
     try {
       await set(ref(database, `groups/${group_id}`), {
+        name: group.name,
         owner,
         date,
         where,
