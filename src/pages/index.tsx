@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 
-import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
+import { Flex, Button, Input, Text } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
@@ -37,8 +37,11 @@ const Home: NextPage = () => {
       const group = await get(
         child(groupRef, `groups/${invite.toUpperCase()}`)
       );
+
       setLoadingInvite(false);
-      console.log(group.val());
+
+      if (group.val()) router.push(`/grupo/invite/${invite.toUpperCase()}`);
+      else alert("Grupo não encontrado!");
     } catch (e) {
       console.error("Error processing invitation: ", e);
     }
