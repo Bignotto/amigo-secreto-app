@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import { Text, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useRoom } from "../../hooks/useGroup";
+import { Text, Flex } from "@chakra-ui/react";
 
-//PÁGINA DO GRUPO
-const Group: NextPage = () => {
+import { useRoom } from "../../../hooks/useGroup";
+
+const Invite: NextPage = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const { group_id } = router.query;
+  const [isLoading, setIsLoading] = useState(true);
+  const { invite_code } = router.query;
 
-  const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
+  const code = invite_code ? invite_code.toString().toUpperCase() : "AAAAAA";
 
-  const { group } = useRoom(id);
+  const { group } = useRoom(code);
 
   useEffect(() => {
     setIsLoading(router.isReady);
@@ -36,4 +36,4 @@ const Group: NextPage = () => {
   );
 };
 
-export default Group;
+export default Invite;
