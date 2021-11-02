@@ -3,24 +3,28 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 
-import { Flex, Stack, Button, Input, Text, Image } from "@chakra-ui/react";
+import { Flex, Button, Input, Text } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
-import { ref, set } from "firebase/database";
+import { ref, set, get, child } from "firebase/database";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   const [groupName, setGroupName] = useState("");
   const [invite, setInvite] = useState("");
-
-  const router = useRouter();
+  const [loadingInvite, setLoadingInvite] = useState(false);
 
   const handleCreateNewGroup = async (event: FormEvent) => {
     event.preventDefault();
     const id = crypto.randomBytes(3).toString("hex").toUpperCase();
 
+    localStorage.setItem("ams_app_user", id);
+
     try {
       await set(ref(database, `groups/${id}`), {
         name: groupName,
+        ownerId: id,
       });
       router.push(`/grupo/new/${id}`);
     } catch (e) {
@@ -30,16 +34,24 @@ const Home: NextPage = () => {
 
   const handleInvite = async (event: FormEvent) => {
     event.preventDefault();
-    // const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+    setLoadingInvite(true);
 
-    // try {
-    //   await set(ref(database, `groups/${id}`), {
-    //     group_name: groupName,
-    //     group_owner: "thiago bignotto",
-    //   });
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
+    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+    localStorage.setItem("ams_app_user", id);
+
+    try {
+      const groupRef = ref(database);
+      const group = await get(
+        child(groupRef, `groups/${invite.toUpperCase()}`)
+      );
+
+      setLoadingInvite(false);
+
+      if (group.val()) router.push(`/grupo/invite/${invite.toUpperCase()}`);
+      else alert("Grupo não encontrado!");
+    } catch (e) {
+      console.error("Error processing invitation: ", e);
+    }
   };
 
   return (
@@ -73,12 +85,7 @@ const Home: NextPage = () => {
             Criar Grupo
           </Button>
         </Flex>
-        <Flex
-          width="100%"
-          as="form"
-          flexDir="column"
-          onSubmit={handleCreateNewGroup}
-        >
+        <Flex width="100%" as="form" flexDir="column" onSubmit={handleInvite}>
           <Text mt="20" fontFamily="Roboto">
             Tenho um convite!
           </Text>
@@ -88,7 +95,13 @@ const Home: NextPage = () => {
             value={invite}
             onChange={(event) => setInvite(event.target.value)}
           />
-          <Button width="100%" type="submit" bg="blue.600" mt="2">
+          <Button
+            width="100%"
+            type="submit"
+            bg="blue.600"
+            mt="2"
+            isLoading={loadingInvite}
+          >
             Entrar no grupo
           </Button>
         </Flex>
