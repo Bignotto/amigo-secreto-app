@@ -9,19 +9,22 @@ import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   const [groupName, setGroupName] = useState("");
   const [invite, setInvite] = useState("");
   const [loadingInvite, setLoadingInvite] = useState(false);
-
-  const router = useRouter();
 
   const handleCreateNewGroup = async (event: FormEvent) => {
     event.preventDefault();
     const id = crypto.randomBytes(3).toString("hex").toUpperCase();
 
+    localStorage.setItem("ams_app_user", id);
+
     try {
       await set(ref(database, `groups/${id}`), {
         name: groupName,
+        ownerId: id,
       });
       router.push(`/grupo/new/${id}`);
     } catch (e) {
@@ -32,6 +35,10 @@ const Home: NextPage = () => {
   const handleInvite = async (event: FormEvent) => {
     event.preventDefault();
     setLoadingInvite(true);
+
+    const id = crypto.randomBytes(3).toString("hex").toUpperCase();
+    localStorage.setItem("ams_app_user", id);
+
     try {
       const groupRef = ref(database);
       const group = await get(

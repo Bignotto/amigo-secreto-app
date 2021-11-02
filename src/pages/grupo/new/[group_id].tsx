@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
@@ -6,32 +6,53 @@ import { database } from "../../../services/firebase";
 import { ref, set } from "firebase/database";
 import { useRoom } from "../../../hooks/useGroup";
 import { GroupAmigoSecreto } from "../../../hooks/IGroup";
+import { Friend } from "../../../hooks/IFriend";
 
 //PÁGINA CRIAÇÃO GRUPO
 const NewGroup: NextPage = () => {
   const router = useRouter();
   const { group_id } = router.query;
 
-  if (!group_id) throw new Error("Missing information: group id");
+  const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
 
-  const { group } = useRoom(group_id.toString());
+  const { group } = useRoom(id);
   const [owner, setOwner] = useState("");
   const [date, setDate] = useState("");
   const [where, setWhere] = useState("");
   const [value, setValue] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const data = localStorage.getItem("ams_app_user");
+    if (!data) {
+      alert("Invalid Session");
+      router.push("/");
+    }
+  }, [router]);
 
   const handleSaveGroupInfo = async (event: FormEvent) => {
     event.preventDefault();
-
+    const data = localStorage.getItem("ams_app_user");
     try {
-      await set(ref(database, `groups/${group_id}`), {
-        name: group.name,
-        owner,
-        date,
-        where,
-        value,
-      } as GroupAmigoSecreto);
-      router.push(`/grupo/${group_id}`);
+      if (data !== group.ownerId) {
+        alert("You are not the group owner.");
+      } else {
+        const friend: Friend = {
+          id: data,
+          name: owner,
+        };
+        await set(ref(database, `groups/${group_id}`), {
+          name: group.name,
+          owner,
+          ownerId: group.ownerId,
+          date,
+          where,
+          value,
+          password,
+          friends: [friend],
+        } as GroupAmigoSecreto);
+        router.push(`/grupo/${group_id}`);
+      }
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -81,6 +102,14 @@ const NewGroup: NextPage = () => {
             placeholder="Valor?"
             value={value}
             onChange={(event) => setValue(event.target.value)}
+          />
+          <Text mt="5" fontFamily="Roboto">
+            Crie uma senha para seus amigos entrarem no grupo
+          </Text>
+          <Input
+            placeholder="Senha fácil"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <Button type="submit" bg="blue.600" mt="15">
             Criar Grupo
