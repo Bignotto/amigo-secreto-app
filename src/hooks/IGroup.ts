@@ -9,4 +9,6 @@ export interface GroupAmigoSecreto {
   value?: string;
   password?: string;
   friends?: Friend[];
+  result?: Friend[];
+  isDrawn?: boolean;
 }
