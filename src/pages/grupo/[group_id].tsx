@@ -3,7 +3,10 @@ import { NextPage } from "next";
 import { Text, Flex, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRoom } from "../../hooks/useGroup";
+import { ref, set } from "firebase/database";
 import { Friend } from "../../hooks/IFriend";
+import { database } from "../../services/firebase";
+import { GroupAmigoSecreto } from "../../hooks/IGroup";
 
 //PÁGINA DO GRUPO
 const Group: NextPage = () => {
@@ -11,6 +14,7 @@ const Group: NextPage = () => {
 
   const [user, setUser] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [drawnFriend, setDrawnFriend] = useState("");
 
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
@@ -30,6 +34,10 @@ const Group: NextPage = () => {
         alert("Invalid Session!");
         router.push("/");
       }
+      const friendIndex = friends.findIndex((friend) => friend.id === user);
+      //TODO: should keep a results array in the hook too
+
+      //setDrawnFriend(friends[friendIndex].name);
     }
 
     setUser(user || "");
@@ -37,13 +45,11 @@ const Group: NextPage = () => {
   }, [router, friends, group]);
 
   const handleDrawGroup = async (event: FormEvent) => {
-    let validDraw = false;
-
     let cont = 10;
+    const result: Friend[] = friends.map((friend) => friend);
 
     while (cont !== 0) {
       cont = 0;
-      const result: Friend[] = friends.map((friend) => friend);
       let currentIndex = friends.length;
       let randomIndex: number;
 
@@ -61,7 +67,15 @@ const Group: NextPage = () => {
         if (friends[i].id === result[i].id) cont++;
       }
       if (cont === 0) console.log({ friends, result, cont });
-      // validDraw = true;
+    }
+
+    try {
+      await set(ref(database, `groups/${group_id}`), {
+        ...group,
+        result,
+      } as GroupAmigoSecreto);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   };
 
@@ -102,6 +116,7 @@ const Group: NextPage = () => {
                 SORTEAR GRUPO
               </Button>
             )}
+            <Text>Seu amigo secreto é {drawnFriend}</Text>
           </>
         )}
       </Flex>
