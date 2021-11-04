@@ -9,6 +9,7 @@ export function useRoom(groupId: string) {
     {} as GroupAmigoSecreto
   );
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [result, setResult] = useState<Friend[]>([]);
 
   useEffect(() => {
     if (groupId === "AAAAAA") return () => {};
@@ -20,6 +21,7 @@ export function useRoom(groupId: string) {
 
       setGroup(databaseGroup);
       setFriends(databaseGroup.friends || []);
+      setResult(databaseGroup.result || []);
     });
 
     return () => {
@@ -27,5 +29,5 @@ export function useRoom(groupId: string) {
     };
   }, [groupId]);
 
-  return { group, friends };
+  return { group, friends, result };
 }

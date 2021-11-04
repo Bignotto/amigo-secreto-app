@@ -18,7 +18,7 @@ const Group: NextPage = () => {
 
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
-  const { group, friends } = useRoom(id);
+  const { group, friends, result } = useRoom(id);
 
   useEffect(() => {
     const user = localStorage.getItem("ams_app_user");
@@ -29,20 +29,21 @@ const Group: NextPage = () => {
     }
 
     if (router.isReady) {
-      const friendsIds = friends.map((friend) => friend.id);
-      if (friends.length > 0 && !friendsIds.includes(user as string)) {
+      const found = friends.find((friend) => friend.id === user);
+      if (!found) {
         alert("Invalid Session!");
         router.push("/");
       }
-      const friendIndex = friends.findIndex((friend) => friend.id === user);
-      //TODO: should keep a results array in the hook too
 
-      //setDrawnFriend(friends[friendIndex].name);
+      const friendIndex = friends.findIndex((friend) => friend.id === user);
+      if (result.length && friendIndex >= 0) {
+        setDrawnFriend(result[friendIndex].name);
+      }
     }
 
     setUser(user || "");
     setIsAdmin(user === group.ownerId);
-  }, [router, friends, group]);
+  }, [router, friends, group, result]);
 
   const handleDrawGroup = async (event: FormEvent) => {
     let cont = 10;
