@@ -24,14 +24,14 @@ const Group: NextPage = () => {
     const user = localStorage.getItem("ams_app_user");
 
     if (!user) {
-      alert("Invalid Session");
+      alert("Invalid Session not user");
       router.push("/");
     }
 
     if (router.isReady) {
       const found = friends.find((friend) => friend.id === user);
-      if (!found) {
-        alert("Invalid Session!");
+      if (!found && friends.length > 0) {
+        alert("Invalid Session! not friend");
         router.push("/");
       }
 
