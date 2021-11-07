@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
-import { Text, Flex, Button } from "@chakra-ui/react";
+import { Text, Flex, Button, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRoom } from "../../hooks/useGroup";
 import { ref, set } from "firebase/database";
@@ -118,6 +118,7 @@ const Group: NextPage = () => {
               </Button>
             )}
             <Text>Seu amigo secreto é {drawnFriend}</Text>
+            <Link href="/grupo/user">Conte mais sobre você!</Link>
           </>
         )}
       </Flex>
