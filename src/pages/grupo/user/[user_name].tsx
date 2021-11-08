@@ -20,17 +20,17 @@ export default function UserInfo() {
   const name = user_name ? user_name.toString().toUpperCase() : "Carregando...";
 
   useEffect(() => {
-    const user = localStorage.getItem("ams_app_user");
+    const userId = localStorage.getItem("ams_app_user");
 
-    if (!user) {
-      alert("Invalid Session: not user");
+    if (!userId) {
+      alert("Invalid Session: not userId");
       router.push("/");
     }
 
     if (router.isReady) {
     }
 
-    setUser(user || "");
+    setUser(userId || "");
   }, [router]);
 
   const handleSaveUserInfo = async (event: FormEvent) => {
