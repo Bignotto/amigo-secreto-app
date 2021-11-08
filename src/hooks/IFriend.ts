@@ -1,8 +1,8 @@
 export interface Friend {
   id: string;
   name: string;
-  size?: number;
-  shoeSize?: number;
+  size?: string;
+  shoeSize?: string;
   like?: string;
   dontLike?: string;
 }
