@@ -121,7 +121,7 @@ const Group: NextPage = () => {
               </Button>
             )}
             <Text>Seu amigo secreto é {drawnFriend}</Text>
-            <Link href={`/grupo/user/${userName}`}>Conte mais sobre você!</Link>
+            <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
           </>
         )}
       </Flex>

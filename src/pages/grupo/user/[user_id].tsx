@@ -1,12 +1,17 @@
 import { FormEvent, useEffect, useState } from "react";
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
-import { ref, set } from "@firebase/database";
+import { ref, set, get, child } from "@firebase/database";
 
 import { Friend } from "../../../hooks/IFriend";
 import { database } from "../../../services/firebase";
+
+interface IParams extends ParsedUrlQuery {
+  user_id: string;
+}
 
 export default function UserInfo() {
   const router = useRouter();
@@ -26,6 +31,11 @@ export default function UserInfo() {
       alert("Invalid Session: not userId");
       router.push("/");
     }
+
+    const userRef = ref(database);
+    const userData = get(child(userRef, `users/${userId}`)).then((userData) =>
+      console.log(userData.val())
+    );
 
     if (router.isReady) {
     }
@@ -116,3 +126,11 @@ export default function UserInfo() {
     </Flex>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { user_id } = context.params as IParams;
+
+  return {
+    props: {},
+  };
+};
