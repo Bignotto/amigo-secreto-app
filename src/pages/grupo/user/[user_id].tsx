@@ -31,16 +31,23 @@ export default function UserInfo() {
       alert("Invalid Session: not userId");
       router.push("/");
     }
-
-    const userRef = ref(database);
-    const userData = get(child(userRef, `users/${userId}`)).then((userData) =>
-      console.log(userData.val())
-    );
-
-    if (router.isReady) {
-    }
-
     setUser(userId || "");
+
+    async function fetchUserData() {
+      const userRef = ref(database);
+      const userDataDatabase = await get(child(userRef, `users/${userId}`));
+
+      const loadedUser: Friend = userDataDatabase.val();
+      if (!loadedUser) {
+        alert("Invalid User: user id not found");
+        router.push("/");
+      }
+      setShoeSize(loadedUser.shoeSize ?? "");
+      setSize(loadedUser.size ?? "");
+      setLike(loadedUser.like ?? "");
+      setDontLike(loadedUser.dontLike ?? "");
+    }
+    fetchUserData();
   }, [router]);
 
   const handleSaveUserInfo = async (event: FormEvent) => {
