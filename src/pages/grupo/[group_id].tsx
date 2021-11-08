@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
-import { Text, Flex, Button } from "@chakra-ui/react";
+import { Text, Flex, Button, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useRoom } from "../../hooks/useGroup";
 import { ref, set } from "firebase/database";
@@ -13,6 +13,8 @@ const Group: NextPage = () => {
   const router = useRouter();
 
   const [user, setUser] = useState("");
+  const [userName, setUserName] = useState("");
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [drawnFriend, setDrawnFriend] = useState("");
 
@@ -34,6 +36,7 @@ const Group: NextPage = () => {
         alert("Invalid Session! not friend");
         router.push("/");
       }
+      setUserName(found?.name ?? "");
 
       const friendIndex = friends.findIndex((friend) => friend.id === user);
       if (result.length && friendIndex >= 0) {
@@ -118,6 +121,7 @@ const Group: NextPage = () => {
               </Button>
             )}
             <Text>Seu amigo secreto é {drawnFriend}</Text>
+            <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
           </>
         )}
       </Flex>

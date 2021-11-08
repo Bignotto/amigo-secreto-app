@@ -45,6 +45,10 @@ const Invite: NextPage = () => {
           ...group,
           friends: newFriends,
         });
+        await set(ref(database, `users/${id}`), {
+          id,
+          name,
+        });
         router.push(`/grupo/${code}`);
       } catch (e) {
         console.error("Error adding document: ", e);

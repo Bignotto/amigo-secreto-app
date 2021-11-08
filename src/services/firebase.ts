@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { initializeApp, getApps } from "firebase/app";
+import { Database, getDatabase } from "firebase/database";
 
 const clientCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,7 +10,12 @@ const clientCredentials = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const firebase = initializeApp(clientCredentials);
-const database = getDatabase(firebase);
+let firebase;
+let database: Database;
+
+if (typeof window !== "undefined" && !getApps().length) {
+  firebase = initializeApp(clientCredentials);
+  database = getDatabase(firebase);
+}
 
 export { firebase, database };

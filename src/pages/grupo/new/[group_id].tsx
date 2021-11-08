@@ -12,7 +12,6 @@ import { Friend } from "../../../hooks/IFriend";
 const NewGroup: NextPage = () => {
   const router = useRouter();
   const { group_id } = router.query;
-
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
 
   const { group } = useRoom(id);
@@ -51,6 +50,10 @@ const NewGroup: NextPage = () => {
           password,
           friends: [friend],
         } as GroupAmigoSecreto);
+        await set(ref(database, `users/${data}`), {
+          id: data,
+          name: owner,
+        });
         router.push(`/grupo/${group_id}`);
       }
     } catch (e) {

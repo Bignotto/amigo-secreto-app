@@ -25,6 +25,7 @@ export function useRoom(groupId: string) {
     });
 
     return () => {
+      console.log("off database groupref");
       off(groupRef);
     };
   }, [groupId]);
