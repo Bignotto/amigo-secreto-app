@@ -9,20 +9,14 @@ import { ref, set, get, child } from "@firebase/database";
 import { Friend } from "../../../hooks/IFriend";
 import { database } from "../../../services/firebase";
 
-interface IParams extends ParsedUrlQuery {
-  user_id: string;
-}
-
 export default function UserInfo() {
   const router = useRouter();
   const [user, setUser] = useState("");
+  const [name, setName] = useState("");
   const [shoeSize, setShoeSize] = useState("");
   const [size, setSize] = useState("");
   const [like, setLike] = useState("");
   const [dontLike, setDontLike] = useState("");
-
-  const { user_name } = router.query;
-  const name = user_name ? user_name.toString().toUpperCase() : "Carregando...";
 
   useEffect(() => {
     const userId = localStorage.getItem("ams_app_user");
@@ -42,6 +36,7 @@ export default function UserInfo() {
         alert("Invalid User: user id not found");
         router.push("/");
       }
+      setName(loadedUser.name);
       setShoeSize(loadedUser.shoeSize ?? "");
       setSize(loadedUser.size ?? "");
       setLike(loadedUser.like ?? "");
@@ -133,11 +128,3 @@ export default function UserInfo() {
     </Flex>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { user_id } = context.params as IParams;
-
-  return {
-    props: {},
-  };
-};
