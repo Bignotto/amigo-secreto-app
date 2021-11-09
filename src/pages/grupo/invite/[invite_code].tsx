@@ -9,7 +9,7 @@ import { ref, set, get, child } from "firebase/database";
 
 import { useRoom } from "../../../hooks/useGroup";
 import { Friend } from "../../../hooks/IFriend";
-import { GroupAmigoSecreto } from "../../../hooks/IGroup";
+import { Header } from "../../../components/Header";
 
 const Invite: NextPage = () => {
   const router = useRouter();
@@ -57,7 +57,8 @@ const Invite: NextPage = () => {
   };
 
   return (
-    <Flex align="center" justify="center">
+    <Flex align="center" justify="center" flexDir="column">
+      <Header />
       <Flex w={["95vw", "50vw"]} flexDir="column">
         <Text fontFamily="Roboto" fontSize="2xl">
           Amigo Secreto {group.name}

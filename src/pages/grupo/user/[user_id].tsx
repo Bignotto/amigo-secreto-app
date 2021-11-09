@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
-import { ref, set, get, child } from "@firebase/database";
+import { Header } from "../../../components/Header";
 
-import { Friend } from "../../../hooks/IFriend";
+import { ref, set, get, child } from "@firebase/database";
 import { database } from "../../../services/firebase";
+import { Friend } from "../../../hooks/IFriend";
 
 export default function UserInfo() {
   const router = useRouter();
@@ -64,7 +65,8 @@ export default function UserInfo() {
   };
 
   return (
-    <Flex align="center" justify="center">
+    <Flex align="center" justify="center" flexDir="column">
+      <Header />
       <Flex
         w={["90vw", "50vw"]}
         align="center"

@@ -7,6 +7,7 @@ import { ref, set } from "firebase/database";
 import { useRoom } from "../../../hooks/useGroup";
 import { GroupAmigoSecreto } from "../../../hooks/IGroup";
 import { Friend } from "../../../hooks/IFriend";
+import { Header } from "../../../components/Header";
 
 //PÁGINA CRIAÇÃO GRUPO
 const NewGroup: NextPage = () => {
@@ -62,7 +63,8 @@ const NewGroup: NextPage = () => {
   };
 
   return (
-    <Flex align="center" justify="center">
+    <Flex align="center" justify="center" flexDir="column">
+      <Header />
       <Flex w={["95vw", "50vw"]} flexDir="column">
         <Text fontFamily="Roboto">
           Ótimo! Vamos criaro o grupo {group.name}
