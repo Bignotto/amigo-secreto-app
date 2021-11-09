@@ -7,6 +7,7 @@ import { ref, set } from "firebase/database";
 import { Friend } from "../../hooks/IFriend";
 import { database } from "../../services/firebase";
 import { Header } from "../../components/Header";
+import { Invite } from "../../components/Invite";
 import { GroupAmigoSecreto } from "../../hooks/IGroup";
 
 //PÁGINA DO GRUPO
@@ -87,6 +88,7 @@ const Group: NextPage = () => {
   return (
     <Flex align="center" justify="center" flexDir="column">
       <Header />
+      <Invite code={id} />
       <Flex w={["95vw", "50vw"]} flexDir="column">
         <Text fontFamily="Pacifico" fontSize="2xl">
           Amigo Secreto {group.name}
