@@ -8,6 +8,7 @@ import { Friend } from "../../hooks/IFriend";
 import { database } from "../../services/firebase";
 import { Header } from "../../components/Header";
 import { Invite } from "../../components/Invite";
+import { Group as GroupInfo } from "../../components/Group";
 import { GroupAmigoSecreto } from "../../hooks/IGroup";
 
 //PÁGINA DO GRUPO
@@ -90,19 +91,17 @@ const Group: NextPage = () => {
       <Header />
       <Invite code={id} />
       <Flex w={["95vw", "50vw"]} flexDir="column">
-        <Text fontFamily="Pacifico" fontSize="2xl">
-          Amigo Secreto {group.name}
-        </Text>
         {!router.isReady ? (
           <Text>Carregando</Text>
         ) : (
           <>
-            <Text>
-              A revelação está marcada para {group.date}, em {group.where}. O
-              valor médio dos presentes é de {group.value}
-            </Text>
-            <Text>owner id: {group.ownerId}</Text>
-            <Text>user: {user}</Text>
+            <GroupInfo
+              name={group.name}
+              value={group.value}
+              date={group.date}
+              time="10hs"
+              place={group.where}
+            />
             <Flex bg="yellow.900" flexDir="column">
               {friends.map((friend) => {
                 const groupAdmin = friend.id === group.ownerId;
