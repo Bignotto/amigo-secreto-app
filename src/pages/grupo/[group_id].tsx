@@ -9,6 +9,7 @@ import { database } from "../../services/firebase";
 import { Header } from "../../components/Header";
 import { Invite } from "../../components/Invite";
 import { Group as GroupInfo } from "../../components/Group";
+import { FriendsList } from "../../components/FriendsList";
 import { GroupAmigoSecreto } from "../../hooks/IGroup";
 
 //PÁGINA DO GRUPO
@@ -102,27 +103,20 @@ const Group: NextPage = () => {
               time="10hs"
               place={group.where}
             />
-            <Flex bg="yellow.900" flexDir="column">
-              {friends.map((friend) => {
-                const groupAdmin = friend.id === group.ownerId;
-                return (
-                  <Flex key={friend.id}>
-                    {groupAdmin && <Text>* </Text>}
-                    <Text>{friend.name}</Text>
-                  </Flex>
-                );
-              })}
-            </Flex>
+
             {isAdmin && (
               <Button
                 width="100%"
-                bg="blue.600"
+                bg="red.600"
                 mt="2"
                 onClick={handleDrawGroup}
               >
                 SORTEAR GRUPO
               </Button>
             )}
+
+            <FriendsList friends={friends} groupName={group.name} />
+
             <Text>Seu amigo secreto é {drawnFriend}</Text>
             <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
           </>
