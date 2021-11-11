@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Text, Flex, Button, Link } from "@chakra-ui/react";
-//<span onClick={() => router.back()}>Click here to go back</span>
+
 export function Header() {
   const router = useRouter();
 
