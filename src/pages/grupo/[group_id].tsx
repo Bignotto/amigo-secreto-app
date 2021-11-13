@@ -16,10 +16,11 @@ import { GroupAmigoSecreto } from "../../hooks/IGroup";
 const Group: NextPage = () => {
   const router = useRouter();
 
-  const [user, setUser] = useState("");
+  const [localUser, setLocalUser] = useState("");
   const [userName, setUserName] = useState("");
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isDrawn, setIsDrawn] = useState(false);
   const [drawnFriend, setDrawnFriend] = useState("");
 
   const { group_id } = router.query;
@@ -34,23 +35,25 @@ const Group: NextPage = () => {
       router.push("/");
     }
 
-    if (router.isReady) {
-      const found = friends.find((friend) => friend.id === user);
-      if (!found && friends.length > 0) {
-        alert("Invalid Session! not friend");
-        router.push("/");
-      }
-      setUserName(found?.name ?? "");
+    const found = friends.find((friend) => friend.id === user);
+    if (!found && friends.length > 0) {
+      alert("Invalid Session! not friend");
+      router.push("/");
+    }
+    setUserName(found?.name ?? "");
 
-      const friendIndex = friends.findIndex((friend) => friend.id === user);
-      if (result.length && friendIndex >= 0) {
-        setDrawnFriend(result[friendIndex].name);
-      }
+    if (result.length > 0) setIsDrawn(true);
+    console.log(result.length);
+
+    const friendIndex = friends.findIndex((friend) => friend.id === user);
+    if (result.length && friendIndex >= 0) {
+      setDrawnFriend(result[friendIndex].name);
     }
 
-    setUser(user || "");
+    setLocalUser(user || "");
     setIsAdmin(user === group.ownerId);
-  }, [router, friends, group, result]);
+    console.log({ isDrawn });
+  }, [router, friends, group, result, isDrawn]);
 
   const handleDrawGroup = async (event: FormEvent) => {
     let cont = 10;
@@ -90,7 +93,9 @@ const Group: NextPage = () => {
   return (
     <Flex align="center" justify="center" flexDir="column">
       <Header />
-      <Invite code={id} />
+
+      {!isDrawn && <Invite code={id} />}
+
       <Flex w={["95vw", "50vw"]} flexDir="column">
         {!router.isReady ? (
           <Text>Carregando</Text>
@@ -106,11 +111,11 @@ const Group: NextPage = () => {
             <Button
               bg="orange.300"
               color="gray.800"
-              onClick={() => router.push(`/grupo/user/${user}`)}
+              onClick={() => router.push(`/grupo/user/${localUser}`)}
             >
               {userName.trim()}, conte mais sobre você!
             </Button>
-            {isAdmin && (
+            {isAdmin && !isDrawn && (
               <Button
                 width="100%"
                 bg="red.600"
