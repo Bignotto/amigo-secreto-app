@@ -103,12 +103,18 @@ const Group: NextPage = () => {
               time="10hs"
               place={group.where}
             />
-
+            <Button
+              bg="orange.300"
+              color="gray.800"
+              onClick={() => router.push(`/grupo/user/${user}`)}
+            >
+              {userName.trim()}, conte mais sobre você!
+            </Button>
             {isAdmin && (
               <Button
                 width="100%"
                 bg="red.600"
-                mt="2"
+                mt="3"
                 onClick={handleDrawGroup}
               >
                 SORTEAR GRUPO
@@ -116,9 +122,6 @@ const Group: NextPage = () => {
             )}
 
             <FriendsList friends={friends} groupId={id} isAdmin={isAdmin} />
-
-            <Text>Seu amigo secreto é {drawnFriend}</Text>
-            <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
           </>
         )}
       </Flex>
