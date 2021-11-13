@@ -41,6 +41,7 @@ const Invite: NextPage = () => {
 
       const newFriends: Friend[] = [...friends, friend];
       try {
+        //TODO: fix multiple requests to firebase
         await set(ref(database, `groups/${code}`), {
           ...group,
           friends: newFriends,

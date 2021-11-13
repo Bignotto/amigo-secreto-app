@@ -35,6 +35,7 @@ export function useRoom(groupId: string) {
 
     const newFriendsList = friends.filter((f) => f.id !== friendId);
 
+    //TODO: fix multiple requests to firebase
     await set(ref(database, `groups/${groupId}`), {
       ...group,
       friends: newFriendsList,
