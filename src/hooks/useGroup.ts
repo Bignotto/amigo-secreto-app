@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { database } from "../services/firebase";
-import { ref, onValue, off } from "firebase/database";
+import { ref, onValue, off, set } from "firebase/database";
 import { GroupAmigoSecreto } from "./IGroup";
 import { Friend } from "./IFriend";
 
@@ -30,5 +30,16 @@ export function useRoom(groupId: string) {
     };
   }, [groupId]);
 
-  return { group, friends, result };
+  async function removeFriend(friendId: string) {
+    console.log("remove friend function", friendId);
+
+    const newFriendsList = friends.filter((f) => f.id !== friendId);
+
+    await set(ref(database, `groups/${groupId}`), {
+      ...group,
+      friends: newFriendsList,
+    });
+  }
+
+  return { group, friends, result, removeFriend };
 }

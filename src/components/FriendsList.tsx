@@ -1,23 +1,33 @@
 import { Text, Flex, Button, Link, Box, Icon } from "@chakra-ui/react";
+import { FormEvent } from "react";
 import { FiAward, FiXCircle } from "react-icons/fi";
 import { Friend } from "../hooks/IFriend";
+import { useRoom } from "../hooks/useGroup";
 
 interface FriendsListProps {
   friends: Friend[];
-  groupName?: string;
+  groupId?: string;
   isAdmin?: boolean;
   isDrawn?: boolean;
 }
+
 export function FriendsList({
   friends,
-  groupName = "",
+  groupId = "",
   isAdmin = false,
   isDrawn = false,
 }: FriendsListProps) {
+  const { group, removeFriend } = useRoom(groupId);
+
+  const handleRemoveFriend = async (friendId: string, e: FormEvent) => {
+    e.preventDefault();
+    await removeFriend(friendId);
+  };
+
   return (
     <Flex flexDir="column" mt="3">
       <Text>
-        {friends.length} Participantes do grupo {groupName}
+        {friends.length} Participantes do grupo {group.name}
       </Text>
       {friends.map((friend, i) => (
         <Flex
@@ -33,7 +43,10 @@ export function FriendsList({
           {!i && <Icon as={FiAward} boxSize="4" mr="3" />}
           {!!i && isAdmin && (
             <Flex>
-              <Button variant="link">
+              <Button
+                variant="link"
+                onClick={(e) => handleRemoveFriend(friend.id, e)}
+              >
                 <Icon as={FiXCircle} boxSize="5" color="red.300" />
               </Button>
             </Flex>

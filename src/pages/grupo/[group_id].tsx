@@ -115,11 +115,7 @@ const Group: NextPage = () => {
               </Button>
             )}
 
-            <FriendsList
-              friends={friends}
-              groupName={group.name}
-              isAdmin={isAdmin}
-            />
+            <FriendsList friends={friends} groupId={id} isAdmin={isAdmin} />
 
             <Text>Seu amigo secreto é {drawnFriend}</Text>
             <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
