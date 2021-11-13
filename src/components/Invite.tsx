@@ -15,12 +15,26 @@ export function Invite({ code }: InviteProps) {
       justify="center"
     >
       <Flex justify="center" flexDir="column">
-        <Text fontFamily="Roboto" color="black" fontWeight="bold">
-          Código do Convite:
-        </Text>
-        <Text fontFamily="Roboto Mono" fontSize="52" color="black">
-          {code}
-        </Text>
+        <Flex mt="3" justify="center">
+          <Text
+            fontFamily="Roboto"
+            color="black"
+            fontWeight="bold"
+            fontSize="20px"
+          >
+            Código do Convite:
+          </Text>
+        </Flex>
+        <Flex justify="center">
+          <Text
+            fontFamily="Roboto Mono"
+            fontSize="52"
+            color="black"
+            fontWeight="bold"
+          >
+            {code}
+          </Text>
+        </Flex>
       </Flex>
     </Flex>
   );
