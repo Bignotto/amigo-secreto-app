@@ -23,16 +23,14 @@ export function Group({ name, value, date, time, place }: GroupProps) {
     >
       <Flex flexDir="row" align="center">
         <Icon as={FiGift} boxSize="6" />
-        <Text fontFamily="Roboto" fontSize="22px" mt="1" ml="3" isTruncated>
+        <Text fontSize="22px" mt="1" ml="3" isTruncated>
           {name}
         </Text>
       </Flex>
       {value && (
         <Flex flexDir="row" align="center" mt="3">
-          <Text fontFamily="Roboto" fontSize="22px">
-            R$
-          </Text>
-          <Text fontFamily="Roboto" fontSize="22px" mt="1" ml="3">
+          <Text fontSize="22px">R$</Text>
+          <Text fontSize="22px" mt="1" ml="3">
             {value}
           </Text>
         </Flex>
@@ -40,7 +38,7 @@ export function Group({ name, value, date, time, place }: GroupProps) {
       {date && (
         <Flex flexDir="row" align="center" mt="3">
           <Icon as={FiCalendar} boxSize="6" />
-          <Text fontFamily="Roboto" fontSize="22px" mt="1" ml="3">
+          <Text fontSize="22px" mt="1" ml="3">
             {date}
           </Text>
         </Flex>
@@ -48,7 +46,7 @@ export function Group({ name, value, date, time, place }: GroupProps) {
       {time && (
         <Flex flexDir="row" align="center" mt="3">
           <Icon as={FiClock} boxSize="6" />
-          <Text fontFamily="Roboto" fontSize="22px" mt="1" ml="3">
+          <Text fontSize="22px" mt="1" ml="3">
             {time}
           </Text>
         </Flex>
@@ -56,7 +54,7 @@ export function Group({ name, value, date, time, place }: GroupProps) {
       {place && (
         <Flex flexDir="row" align="center" mt="3">
           <Icon as={FiMapPin} boxSize="6" />
-          <Text fontFamily="Roboto" fontSize="22px" mt="1" ml="3">
+          <Text fontSize="22px" mt="1" ml="3">
             {place}
           </Text>
         </Flex>

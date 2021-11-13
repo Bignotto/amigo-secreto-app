@@ -5,7 +5,7 @@ import { Text, Flex, Input, Button } from "@chakra-ui/react";
 import crypto from "crypto";
 
 import { database } from "../../../services/firebase";
-import { ref, set, get, child } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 import { useRoom } from "../../../hooks/useGroup";
 import { Friend } from "../../../hooks/IFriend";
@@ -41,6 +41,7 @@ const Invite: NextPage = () => {
 
       const newFriends: Friend[] = [...friends, friend];
       try {
+        //TODO: fix multiple requests to firebase
         await set(ref(database, `groups/${code}`), {
           ...group,
           friends: newFriends,
