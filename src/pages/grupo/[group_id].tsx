@@ -56,6 +56,15 @@ const Group: NextPage = () => {
   }, [router, friends, group, result, isDrawn]);
 
   const handleDrawGroup = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (friends.length <= 2) {
+      alert("Você precisa de pelo menos três amigos para sortear o grupo.");
+      return;
+    }
+
+    if (!confirm("Sortear o grupo?")) return;
+
     let cont = 10;
     const result: Friend[] = friends.map((friend) => friend);
 
@@ -126,7 +135,12 @@ const Group: NextPage = () => {
               </Button>
             )}
 
-            <FriendsList friends={friends} groupId={id} isAdmin={isAdmin} />
+            <FriendsList
+              friends={friends}
+              groupId={id}
+              isAdmin={isAdmin}
+              isDrawn={isDrawn}
+            />
           </>
         )}
       </Flex>
