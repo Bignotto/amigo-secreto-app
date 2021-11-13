@@ -39,6 +39,7 @@ export function useRoom(groupId: string) {
       ...group,
       friends: newFriendsList,
     });
+    await set(ref(database, `users/${friendId}`), null);
   }
 
   return { group, friends, result, removeFriend };

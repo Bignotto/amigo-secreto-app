@@ -5,7 +5,7 @@ import { Text, Flex, Input, Button } from "@chakra-ui/react";
 import crypto from "crypto";
 
 import { database } from "../../../services/firebase";
-import { ref, set, get, child } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 import { useRoom } from "../../../hooks/useGroup";
 import { Friend } from "../../../hooks/IFriend";
