@@ -43,7 +43,6 @@ const Group: NextPage = () => {
     setUserName(found?.name ?? "");
 
     if (result.length > 0) setIsDrawn(true);
-    console.log(result.length);
 
     const friendIndex = friends.findIndex((friend) => friend.id === user);
     if (result.length && friendIndex >= 0) {
@@ -52,7 +51,6 @@ const Group: NextPage = () => {
 
     setLocalUser(user || "");
     setIsAdmin(user === group.ownerId);
-    console.log({ isDrawn });
   }, [router, friends, group, result, isDrawn]);
 
   const handleDrawGroup = async (event: FormEvent) => {
@@ -117,6 +115,7 @@ const Group: NextPage = () => {
               time="10hs"
               place={group.where}
             />
+
             <Button
               bg="orange.300"
               color="gray.800"
@@ -124,6 +123,7 @@ const Group: NextPage = () => {
             >
               {userName.trim()}, conte mais sobre você!
             </Button>
+
             {isAdmin && !isDrawn && (
               <Button
                 width="100%"

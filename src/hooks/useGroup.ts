@@ -31,7 +31,7 @@ export function useRoom(groupId: string) {
   }, [groupId]);
 
   async function removeFriend(friendId: string) {
-    console.log("remove friend function", friendId);
+    console.log(`removeing friend ${friendId}`);
 
     const newFriendsList = friends.filter((f) => f.id !== friendId);
 
