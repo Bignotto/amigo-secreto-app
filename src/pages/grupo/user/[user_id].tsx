@@ -1,7 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
 import { Header } from "../../../components/Header";
@@ -18,8 +16,6 @@ export default function UserInfo() {
   const [size, setSize] = useState("");
   const [like, setLike] = useState("");
   const [dontLike, setDontLike] = useState("");
-
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const userId = localStorage.getItem("ams_app_user");
@@ -46,7 +42,6 @@ export default function UserInfo() {
       setDontLike(loadedUser.dontLike ?? "");
     }
     fetchUserData();
-    setIsLoading(false);
   }, [router]);
 
   const handleSaveUserInfo = async (event: FormEvent) => {

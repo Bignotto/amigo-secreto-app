@@ -11,6 +11,7 @@ import { Invite } from "../../components/Invite";
 import { Group as GroupInfo } from "../../components/Group";
 import { FriendsList } from "../../components/FriendsList";
 import { GroupAmigoSecreto } from "../../hooks/IGroup";
+import { FriendInfo } from "../../components/Friend";
 
 //PÁGINA DO GRUPO
 const Group: NextPage = () => {
@@ -22,6 +23,8 @@ const Group: NextPage = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDrawn, setIsDrawn] = useState(false);
   const [drawnFriend, setDrawnFriend] = useState("");
+
+  const [showFriend, setShowFriend] = useState(false);
 
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
@@ -46,7 +49,7 @@ const Group: NextPage = () => {
 
     const friendIndex = friends.findIndex((friend) => friend.id === user);
     if (result.length && friendIndex >= 0) {
-      setDrawnFriend(result[friendIndex].name);
+      setDrawnFriend(result[friendIndex].id);
     }
 
     setLocalUser(user || "");
@@ -115,6 +118,15 @@ const Group: NextPage = () => {
               time="10hs"
               place={group.where}
             />
+            {isDrawn && (
+              <Flex flexDir="column" mb="3">
+                <Text>O sorteio foi realizado!</Text>
+                <Button bg="red.600" onClick={() => setShowFriend(!showFriend)}>
+                  Ver meu Amigo Secreto!
+                </Button>
+                {showFriend && <FriendInfo friendId={drawnFriend}></FriendInfo>}
+              </Flex>
+            )}
 
             <Button
               bg="orange.300"
