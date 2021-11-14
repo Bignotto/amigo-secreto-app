@@ -41,7 +41,7 @@ export function FriendsList({
         >
           <Text>{friend.name}</Text>
           {!i && <Icon as={FiAward} boxSize="4" mr="3" />}
-          {!!i && isAdmin && (
+          {!!i && isAdmin && !isDrawn && (
             <Flex>
               <Button
                 variant="link"

@@ -11,16 +11,20 @@ import { Invite } from "../../components/Invite";
 import { Group as GroupInfo } from "../../components/Group";
 import { FriendsList } from "../../components/FriendsList";
 import { GroupAmigoSecreto } from "../../hooks/IGroup";
+import { FriendInfo } from "../../components/Friend";
 
 //PÁGINA DO GRUPO
 const Group: NextPage = () => {
   const router = useRouter();
 
-  const [user, setUser] = useState("");
+  const [localUser, setLocalUser] = useState("");
   const [userName, setUserName] = useState("");
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isDrawn, setIsDrawn] = useState(false);
   const [drawnFriend, setDrawnFriend] = useState("");
+
+  const [showFriend, setShowFriend] = useState(false);
 
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
@@ -34,25 +38,34 @@ const Group: NextPage = () => {
       router.push("/");
     }
 
-    if (router.isReady) {
-      const found = friends.find((friend) => friend.id === user);
-      if (!found && friends.length > 0) {
-        alert("Invalid Session! not friend");
-        router.push("/");
-      }
-      setUserName(found?.name ?? "");
+    const found = friends.find((friend) => friend.id === user);
+    if (!found && friends.length > 0) {
+      alert("Invalid Session! not friend");
+      router.push("/");
+    }
+    setUserName(found?.name ?? "");
 
-      const friendIndex = friends.findIndex((friend) => friend.id === user);
-      if (result.length && friendIndex >= 0) {
-        setDrawnFriend(result[friendIndex].name);
-      }
+    if (result.length > 0) setIsDrawn(true);
+
+    const friendIndex = friends.findIndex((friend) => friend.id === user);
+    if (result.length && friendIndex >= 0) {
+      setDrawnFriend(result[friendIndex].id);
     }
 
-    setUser(user || "");
+    setLocalUser(user || "");
     setIsAdmin(user === group.ownerId);
-  }, [router, friends, group, result]);
+  }, [router, friends, group, result, isDrawn]);
 
   const handleDrawGroup = async (event: FormEvent) => {
+    event.preventDefault();
+
+    if (friends.length <= 2) {
+      alert("Você precisa de pelo menos três amigos para sortear o grupo.");
+      return;
+    }
+
+    if (!confirm("Sortear o grupo?")) return;
+
     let cont = 10;
     const result: Friend[] = friends.map((friend) => friend);
 
@@ -90,7 +103,9 @@ const Group: NextPage = () => {
   return (
     <Flex align="center" justify="center" flexDir="column">
       <Header />
-      <Invite code={id} />
+
+      {!isDrawn && <Invite code={id} />}
+
       <Flex w={["95vw", "50vw"]} flexDir="column">
         {!router.isReady ? (
           <Text>Carregando</Text>
@@ -103,22 +118,41 @@ const Group: NextPage = () => {
               time="10hs"
               place={group.where}
             />
+            {isDrawn && (
+              <Flex flexDir="column" mb="3">
+                <Text>O sorteio foi realizado!</Text>
+                <Button bg="red.600" onClick={() => setShowFriend(!showFriend)}>
+                  Ver meu Amigo Secreto!
+                </Button>
+                {showFriend && <FriendInfo friendId={drawnFriend}></FriendInfo>}
+              </Flex>
+            )}
 
-            {isAdmin && (
+            <Button
+              bg="orange.300"
+              color="gray.800"
+              onClick={() => router.push(`/grupo/user/${localUser}`)}
+            >
+              {userName.trim()}, conte mais sobre você!
+            </Button>
+
+            {isAdmin && !isDrawn && (
               <Button
                 width="100%"
                 bg="red.600"
-                mt="2"
+                mt="3"
                 onClick={handleDrawGroup}
               >
                 SORTEAR GRUPO
               </Button>
             )}
 
-            <FriendsList friends={friends} groupId={id} isAdmin={isAdmin} />
-
-            <Text>Seu amigo secreto é {drawnFriend}</Text>
-            <Link href={`/grupo/user/${user}`}>Conte mais sobre você!</Link>
+            <FriendsList
+              friends={friends}
+              groupId={id}
+              isAdmin={isAdmin}
+              isDrawn={isDrawn}
+            />
           </>
         )}
       </Flex>

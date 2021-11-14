@@ -1,7 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
 import { Header } from "../../../components/Header";
@@ -12,7 +10,7 @@ import { Friend } from "../../../hooks/IFriend";
 
 export default function UserInfo() {
   const router = useRouter();
-  const [user, setUser] = useState("");
+  const [localUser, setLocalUser] = useState("");
   const [name, setName] = useState("");
   const [shoeSize, setShoeSize] = useState("");
   const [size, setSize] = useState("");
@@ -26,7 +24,7 @@ export default function UserInfo() {
       alert("Invalid Session: not userId");
       router.push("/");
     }
-    setUser(userId || "");
+    setLocalUser(userId || "");
 
     async function fetchUserData() {
       const userRef = ref(database);
@@ -50,8 +48,8 @@ export default function UserInfo() {
     event.preventDefault();
 
     try {
-      await set(ref(database, `users/${user}`), {
-        id: user,
+      await set(ref(database, `users/${localUser}`), {
+        id: localUser,
         name,
         size,
         shoeSize,
@@ -73,11 +71,6 @@ export default function UserInfo() {
         justify="center"
         flexDir="column"
       >
-        <Text fontFamily="Pacifico" fontSize="6xl">
-          Amigo
-          <br />
-          Secreto
-        </Text>
         <Flex
           width="100%"
           as="form"
