@@ -38,6 +38,15 @@ const Group: NextPage = () => {
       router.push("/");
     }
 
+    console.log({ group, ready: router.isReady });
+
+    if (router.isReady) {
+      if (Object.keys(group).length === 1) {
+        alert(group.name);
+        router.push("/");
+      }
+    }
+
     const found = friends.find((friend) => friend.id === user);
     if (!found && friends.length > 0) {
       alert("Invalid Session! not friend");
@@ -101,7 +110,7 @@ const Group: NextPage = () => {
   };
 
   return (
-    <Flex align="center" justify="center" flexDir="column">
+    <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
 
       {!isDrawn && <Invite code={id} />}
@@ -147,12 +156,14 @@ const Group: NextPage = () => {
               </Button>
             )}
 
-            <FriendsList
-              friends={friends}
-              groupId={id}
-              isAdmin={isAdmin}
-              isDrawn={isDrawn}
-            />
+            {friends.length && (
+              <FriendsList
+                friends={friends}
+                groupId={id}
+                isAdmin={isAdmin}
+                isDrawn={isDrawn}
+              />
+            )}
           </>
         )}
       </Flex>

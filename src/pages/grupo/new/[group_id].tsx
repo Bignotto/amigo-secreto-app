@@ -63,7 +63,7 @@ const NewGroup: NextPage = () => {
   };
 
   return (
-    <Flex align="center" justify="center" flexDir="column">
+    <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
       <Flex w={["95vw", "50vw"]} flexDir="column">
         <Text fontFamily="Roboto">

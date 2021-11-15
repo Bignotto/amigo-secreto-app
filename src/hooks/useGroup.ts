@@ -19,9 +19,9 @@ export function useRoom(groupId: string) {
     onValue(groupRef, (group) => {
       const databaseGroup: GroupAmigoSecreto = group.val();
 
-      setGroup(databaseGroup);
-      setFriends(databaseGroup.friends || []);
-      setResult(databaseGroup.result || []);
+      setGroup(databaseGroup || { name: "Not Found" });
+      setFriends(databaseGroup?.friends || []);
+      setResult(databaseGroup?.result || []);
     });
 
     return () => {
