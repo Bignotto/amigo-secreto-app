@@ -71,16 +71,16 @@ export function FriendInfo({ friendId }: FriendProps) {
         </Center>
       </Flex>
       <Flex mt="2" mb="3">
-        <Text fontWeight="bold" fontSize="18px">
-          Eu gosto:&nbsp;
+        <Text fontSize="18px">
+          <strong>Eu gosto: </strong>
+          {like}
         </Text>
-        <Text fontSize="18px">{like}</Text>
       </Flex>
       <Flex>
-        <Text fontWeight="bold" fontSize="18px">
-          Eu não gosto:&nbsp;
+        <Text fontSize="18px">
+          <strong>Eu não gosto: </strong>
+          {dontLike}
         </Text>
-        <Text fontSize="18px">{dontLike}</Text>
       </Flex>
     </Flex>
   );
