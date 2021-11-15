@@ -7,6 +7,7 @@ import { Flex, Button, Input, Text } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
+import { GroupAmigoSecreto } from "../hooks/IGroup";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -41,14 +42,21 @@ const Home: NextPage = () => {
 
     try {
       const groupRef = ref(database);
-      const group = await get(
+      const groupVal = await get(
         child(groupRef, `groups/${invite.toUpperCase()}`)
       );
 
       setLoadingInvite(false);
 
-      if (group.val()) router.push(`/grupo/invite/${invite.toUpperCase()}`);
-      else alert("Grupo não encontrado!");
+      const group: GroupAmigoSecreto = groupVal.val();
+      if (group) {
+        if (group?.result) {
+          alert("Este groupo já foi sorteado.");
+          router.push("/");
+          return;
+        }
+        router.push(`/grupo/invite/${invite.toUpperCase()}`);
+      } else alert("Grupo não encontrado!");
     } catch (e) {
       console.error("Error processing invitation: ", e);
     }
