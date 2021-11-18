@@ -2,7 +2,7 @@ import { Text, Flex, Button, Link, Box, Icon } from "@chakra-ui/react";
 import { FormEvent } from "react";
 import { FiAward, FiXCircle } from "react-icons/fi";
 import { Friend } from "../hooks/IFriend";
-import { useRoom } from "../hooks/useGroup";
+import { useGroup } from "../hooks/useGroup";
 
 interface FriendsListProps {
   friends: Friend[];
@@ -17,7 +17,7 @@ export function FriendsList({
   isAdmin = false,
   isDrawn = false,
 }: FriendsListProps) {
-  const { group, removeFriend } = useRoom(groupId);
+  const { group, removeFriend } = useGroup(groupId);
 
   const handleRemoveFriend = async (friendId: string, e: FormEvent) => {
     e.preventDefault();

@@ -4,7 +4,7 @@ import { ref, onValue, off, set } from "firebase/database";
 import { GroupAmigoSecreto } from "./IGroup";
 import { Friend } from "./IFriend";
 
-export function useRoom(groupId: string) {
+export function useGroup(groupId: string) {
   const [group, setGroup] = useState<GroupAmigoSecreto>(
     {} as GroupAmigoSecreto
   );
