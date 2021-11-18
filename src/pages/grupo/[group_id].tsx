@@ -38,8 +38,6 @@ const Group: NextPage = () => {
       router.push("/");
     }
 
-    console.log({ group, ready: router.isReady });
-
     if (router.isReady) {
       if (Object.keys(group).length === 1) {
         alert(group.name);
@@ -93,10 +91,8 @@ const Group: NextPage = () => {
         ];
       }
       for (let i = 0; i < friends.length; i++) {
-        console.log(friends[i].id === result[i].id);
         if (friends[i].id === result[i].id) cont++;
       }
-      if (cont === 0) console.log({ friends, result, cont });
     }
 
     try {
