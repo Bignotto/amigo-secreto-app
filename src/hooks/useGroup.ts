@@ -25,14 +25,11 @@ export function useRoom(groupId: string) {
     });
 
     return () => {
-      console.log("off database groupref");
       off(groupRef);
     };
   }, [groupId]);
 
   async function removeFriend(friendId: string) {
-    console.log(`removeing friend ${friendId}`);
-
     const newFriendsList = friends.filter((f) => f.id !== friendId);
 
     //TODO: fix multiple requests to firebase
