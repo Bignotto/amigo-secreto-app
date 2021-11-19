@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Text, Flex, Input, Button } from "@chakra-ui/react";
 import { database } from "../../../services/firebase";
 import { ref, set } from "firebase/database";
-import { useRoom } from "../../../hooks/useGroup";
+import { useGroup } from "../../../hooks/useGroup";
 import { GroupAmigoSecreto } from "../../../hooks/IGroup";
 import { Friend } from "../../../hooks/IFriend";
 import { Header } from "../../../components/Header";
@@ -15,7 +15,7 @@ const NewGroup: NextPage = () => {
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
 
-  const { group } = useRoom(id);
+  const { group } = useGroup(id);
   const [owner, setOwner] = useState("");
   const [date, setDate] = useState("");
   const [where, setWhere] = useState("");

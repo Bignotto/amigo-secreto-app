@@ -7,7 +7,7 @@ import crypto from "crypto";
 import { database } from "../../../services/firebase";
 import { ref, set } from "firebase/database";
 
-import { useRoom } from "../../../hooks/useGroup";
+import { useGroup } from "../../../hooks/useGroup";
 import { Friend } from "../../../hooks/IFriend";
 import { Header } from "../../../components/Header";
 
@@ -21,7 +21,7 @@ const Invite: NextPage = () => {
 
   const code = invite_code ? invite_code.toString().toUpperCase() : "AAAAAA";
 
-  const { group, friends } = useRoom(code);
+  const { group, friends } = useGroup(code);
 
   useEffect(() => {
     setIsLoading(router.isReady);

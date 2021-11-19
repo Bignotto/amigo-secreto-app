@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Text, Flex, Button, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useRoom } from "../../hooks/useGroup";
+import { useGroup } from "../../hooks/useGroup";
 import { ref, set } from "firebase/database";
 import { Friend } from "../../hooks/IFriend";
 import { database } from "../../services/firebase";
@@ -28,7 +28,7 @@ const Group: NextPage = () => {
 
   const { group_id } = router.query;
   const id = group_id ? group_id.toString().toUpperCase() : "AAAAAA";
-  const { group, friends, result } = useRoom(id);
+  const { group, friends, result } = useGroup(id);
 
   useEffect(() => {
     const user = localStorage.getItem("ams_app_user");
