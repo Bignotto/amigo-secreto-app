@@ -65,7 +65,7 @@ const Home: NextPage = () => {
   return (
     <Flex align="center" justify="center">
       <Flex
-        w={["90vw", "50vw"]}
+        w={["95vw", "40vw"]}
         align="center"
         justify="center"
         flexDir="column"
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
           onSubmit={handleCreateNewGroup}
         >
           <Text mt="10" fontFamily="Roboto">
-            Crie seu grupo de Amigo Secreto:
+            Crie seu grupo de Amigo Secreto!
           </Text>
           <Input
             placeholder="Nome do grupo"
