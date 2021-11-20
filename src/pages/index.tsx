@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 
-import { Flex, Button, Input, Text } from "@chakra-ui/react";
+import { Flex, Button, Input, Text, Link } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
   return (
     <Flex align="center" justify="center">
       <Flex
-        w={["95vw", "40vw"]}
+        w={["95vw", "25vw"]}
         align="center"
         justify="center"
         flexDir="column"
@@ -81,8 +81,17 @@ const Home: NextPage = () => {
           flexDir="column"
           onSubmit={handleCreateNewGroup}
         >
+          <Text>Faça o sorteio do seu grupo de Amigo Secreto!</Text>
+          <br />
+          <Text>
+            Não precisa criar uma conta, confirmar e-mail nem decorar
+            senha!&nbsp;
+            <Link href="/instructions" color="blue.300">
+              Veja como funciona.
+            </Link>
+          </Text>
           <Text mt="10" fontFamily="Roboto">
-            Crie seu grupo de Amigo Secreto!
+            Qual vai ser o nome do seu grupo?
           </Text>
           <Input
             placeholder="Nome do grupo"
