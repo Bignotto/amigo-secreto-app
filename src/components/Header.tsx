@@ -5,7 +5,7 @@ export function Header() {
   const router = useRouter();
 
   return (
-    <Flex w={["95vw", "50vw"]} flexDir="row" align="center" mt="3" mb="3">
+    <Flex w={["95vw", "25vw"]} flexDir="row" align="center" mt="3" mb="3">
       <Flex>
         <Button onClick={() => router.back()} variant="link">
           Voltar
@@ -17,7 +17,9 @@ export function Header() {
         </Text>
       </Flex>
       <Flex>
-        <Button variant="link">Ajuda</Button>
+        <Button onClick={() => router.push("/instructions")} variant="link">
+          Ajuda
+        </Button>
       </Flex>
     </Flex>
   );
