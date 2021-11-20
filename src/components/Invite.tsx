@@ -6,14 +6,7 @@ interface InviteProps {
 
 export function Invite({ code }: InviteProps) {
   return (
-    <Flex
-      w={["95vw", "50vw"]}
-      mt="3"
-      mb="3"
-      borderRadius="8"
-      bg="white"
-      justify="center"
-    >
+    <Flex mt="3" mb="3" borderRadius="8" bg="white" justify="center">
       <Flex justify="center" flexDir="column">
         <Flex mt="3" justify="center">
           <Text

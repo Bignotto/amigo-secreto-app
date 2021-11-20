@@ -109,9 +109,8 @@ const Group: NextPage = () => {
     <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
 
-      {!isDrawn && <Invite code={id} />}
-
-      <Flex w={["95vw", "50vw"]} flexDir="column">
+      <Flex w={["95vw", "25vw"]} flexDir="column">
+        {!isDrawn && <Invite code={id} />}
         {!router.isReady ? (
           <Text>Carregando</Text>
         ) : (
