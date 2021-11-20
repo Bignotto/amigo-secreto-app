@@ -3,11 +3,12 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 
-import { Flex, Button, Input, Text } from "@chakra-ui/react";
+import { Flex, Button, Input, Text, Link } from "@chakra-ui/react";
 
 import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
 import { GroupAmigoSecreto } from "../hooks/IGroup";
+import HomeLogo from "../components/HomeLogo";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -65,24 +66,29 @@ const Home: NextPage = () => {
   return (
     <Flex align="center" justify="center">
       <Flex
-        w={["90vw", "50vw"]}
+        w={["95vw", "25vw"]}
         align="center"
         justify="center"
         flexDir="column"
       >
-        <Text fontFamily="Pacifico" fontSize="6xl">
-          Amigo
-          <br />
-          Secreto
-        </Text>
         <Flex
           width="100%"
           as="form"
           flexDir="column"
           onSubmit={handleCreateNewGroup}
         >
+          <HomeLogo />
+          <Text>Faça o sorteio do seu grupo de Amigo Secreto!</Text>
+          <br />
+          <Text>
+            Não precisa criar uma conta, confirmar e-mail nem decorar
+            senha!&nbsp;
+            <Link href="/instructions" color="blue.300">
+              Veja como funciona.
+            </Link>
+          </Text>
           <Text mt="10" fontFamily="Roboto">
-            Crie seu grupo de Amigo Secreto:
+            Qual vai ser o nome do seu grupo?
           </Text>
           <Input
             placeholder="Nome do grupo"
@@ -95,7 +101,7 @@ const Home: NextPage = () => {
         </Flex>
         <Flex width="100%" as="form" flexDir="column" onSubmit={handleInvite}>
           <Text mt="20" fontFamily="Roboto">
-            Tenho um convite!
+            Para entrar com um convite insira o código que você recebeu abaixo:
           </Text>
           <Input
             width="100%"

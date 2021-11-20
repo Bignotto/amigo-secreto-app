@@ -12,8 +12,6 @@ interface GroupProps {
 export function Group({ name, value, date, time, place }: GroupProps) {
   return (
     <Flex
-      w={["95vw", "50vw"]}
-      mt="3"
       mb="3"
       p="10"
       borderRadius="8"

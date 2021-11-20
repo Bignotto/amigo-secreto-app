@@ -109,9 +109,8 @@ const Group: NextPage = () => {
     <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
 
-      {!isDrawn && <Invite code={id} />}
-
-      <Flex w={["95vw", "50vw"]} flexDir="column">
+      <Flex w={["95vw", "25vw"]} flexDir="column">
+        {!isDrawn && <Invite code={id} pass={group.password ?? ""} />}
         {!router.isReady ? (
           <Text>Carregando</Text>
         ) : (
@@ -129,7 +128,16 @@ const Group: NextPage = () => {
                 <Button bg="red.600" onClick={() => setShowFriend(!showFriend)}>
                   Ver meu Amigo Secreto!
                 </Button>
-                {showFriend && <FriendInfo friendId={drawnFriend}></FriendInfo>}
+                {showFriend && (
+                  <>
+                    <FriendInfo friendId={drawnFriend} />
+                    <Text>
+                      Tire um printe dessa tela. O AmigoSecretoApp não guarda as
+                      informações por muito tempo e não será possível recuperar
+                      o resultado do sorteio depois de fechar o aplicativo.
+                    </Text>
+                  </>
+                )}
               </Flex>
             )}
 

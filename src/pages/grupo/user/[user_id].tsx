@@ -66,7 +66,7 @@ export default function UserInfo() {
     <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
       <Flex
-        w={["90vw", "50vw"]}
+        w={["90vw", "25vw"]}
         align="center"
         justify="center"
         flexDir="column"

@@ -65,7 +65,7 @@ const NewGroup: NextPage = () => {
   return (
     <Flex align="center" justify="center" flexDir="column" mb="56">
       <Header />
-      <Flex w={["95vw", "50vw"]} flexDir="column">
+      <Flex w={["95vw", "25vw"]} flexDir="column" mt="8">
         <Text fontFamily="Roboto">
           Ótimo! Vamos criaro o grupo {group.name}
         </Text>

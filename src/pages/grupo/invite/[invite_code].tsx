@@ -11,6 +11,8 @@ import { useGroup } from "../../../hooks/useGroup";
 import { Friend } from "../../../hooks/IFriend";
 import { Header } from "../../../components/Header";
 
+import { Group as GroupInfo } from "../../../components/Group";
+
 const Invite: NextPage = () => {
   const router = useRouter();
   const { invite_code } = router.query;
@@ -60,10 +62,15 @@ const Invite: NextPage = () => {
   return (
     <Flex align="center" justify="center" flexDir="column">
       <Header />
-      <Flex w={["95vw", "50vw"]} flexDir="column">
-        <Text fontFamily="Roboto" fontSize="2xl">
-          Amigo Secreto {group.name}
-        </Text>
+      <Flex w={["95vw", "25vw"]} flexDir="column">
+        <Text>Você vai entrar no grupo:</Text>
+        <GroupInfo
+          name={group.name}
+          value={group.value}
+          date={group.date}
+          time="10hs"
+          place={group.where}
+        />
         <Flex
           width="100%"
           as="form"
@@ -87,7 +94,7 @@ const Invite: NextPage = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
 
-          <Button type="submit" bg="blue.600" mt="20">
+          <Button type="submit" bg="orange.600" mt="3">
             Entrar no grupo
           </Button>
         </Flex>
