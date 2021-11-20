@@ -8,6 +8,7 @@ import { Flex, Button, Input, Text, Link } from "@chakra-ui/react";
 import { database } from "../services/firebase";
 import { ref, set, get, child } from "firebase/database";
 import { GroupAmigoSecreto } from "../hooks/IGroup";
+import HomeLogo from "../components/HomeLogo";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -70,17 +71,13 @@ const Home: NextPage = () => {
         justify="center"
         flexDir="column"
       >
-        <Text fontFamily="Pacifico" fontSize="6xl">
-          Amigo
-          <br />
-          Secreto
-        </Text>
         <Flex
           width="100%"
           as="form"
           flexDir="column"
           onSubmit={handleCreateNewGroup}
         >
+          <HomeLogo />
           <Text>Faça o sorteio do seu grupo de Amigo Secreto!</Text>
           <br />
           <Text>
@@ -104,7 +101,7 @@ const Home: NextPage = () => {
         </Flex>
         <Flex width="100%" as="form" flexDir="column" onSubmit={handleInvite}>
           <Text mt="20" fontFamily="Roboto">
-            Tenho um convite!
+            Para entrar com um convite insira o código que você recebeu abaixo:
           </Text>
           <Input
             width="100%"
