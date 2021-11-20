@@ -110,7 +110,7 @@ const Group: NextPage = () => {
       <Header />
 
       <Flex w={["95vw", "25vw"]} flexDir="column">
-        {!isDrawn && <Invite code={id} />}
+        {!isDrawn && <Invite code={id} pass={group.password ?? ""} />}
         {!router.isReady ? (
           <Text>Carregando</Text>
         ) : (
