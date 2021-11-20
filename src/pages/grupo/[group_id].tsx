@@ -128,7 +128,16 @@ const Group: NextPage = () => {
                 <Button bg="red.600" onClick={() => setShowFriend(!showFriend)}>
                   Ver meu Amigo Secreto!
                 </Button>
-                {showFriend && <FriendInfo friendId={drawnFriend}></FriendInfo>}
+                {showFriend && (
+                  <>
+                    <FriendInfo friendId={drawnFriend} />
+                    <Text>
+                      Tire um printe dessa tela. O AmigoSecretoApp não guarda as
+                      informações por muito tempo e não será possível recuperar
+                      o resultado do sorteio depois de fechar o aplicativo.
+                    </Text>
+                  </>
+                )}
               </Flex>
             )}
 
