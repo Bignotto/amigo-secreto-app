@@ -5,6 +5,7 @@ export interface GroupAmigoSecreto {
   owner?: string;
   ownerId?: string;
   date?: string;
+  time?: string;
   where?: string;
   value?: string;
   password?: string;
