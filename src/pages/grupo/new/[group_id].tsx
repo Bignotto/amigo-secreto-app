@@ -18,6 +18,7 @@ const NewGroup: NextPage = () => {
   const { group } = useGroup(id);
   const [owner, setOwner] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [where, setWhere] = useState("");
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
@@ -46,6 +47,7 @@ const NewGroup: NextPage = () => {
           owner,
           ownerId: group.ownerId,
           date,
+          time,
           where,
           value,
           password,
@@ -87,10 +89,17 @@ const NewGroup: NextPage = () => {
             Quando vai ser a revelação?
           </Text>
           <Input
-            type="datetime-local"
-            placeholder="Quando"
+            placeholder="24/12/2021"
             value={date}
             onChange={(event) => setDate(event.target.value)}
+          />
+          <Text mt="5" fontFamily="Roboto">
+            Em qual horário?
+          </Text>
+          <Input
+            placeholder="20hs"
+            value={time}
+            onChange={(event) => setTime(event.target.value)}
           />
           <Text mt="5" fontFamily="Roboto">
             Onde vai ser a revelação?

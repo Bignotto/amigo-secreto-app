@@ -119,7 +119,7 @@ const Group: NextPage = () => {
               name={group.name}
               value={group.value}
               date={group.date}
-              time="10hs"
+              time={group.time}
               place={group.where}
             />
             {isDrawn && (
